@@ -100,6 +100,42 @@ class ArachneLeg(object):
         self.foot.angle = angle
         return self
 
+    def offset_hip_angle(self, angle: float) -> ArachneLeg:
+        """Offset the angle for the hip joint
+
+        Args:
+            angle (float): The angle to offset
+
+        Returns:
+            ArachneLeg: The leg
+        """
+        self.hip.angle += angle
+        return self
+
+    def offset_knee_angle(self, angle: float) -> ArachneLeg:
+        """Offset the angle for the knee joint
+
+        Args:
+            angle (float): The angle to offset
+
+        Returns:
+            ArachneLeg: The leg
+        """
+        self.knee.angle += angle
+        return self
+
+    def offset_foot_angle(self, angle: float) -> ArachneLeg:
+        """Offset the angle for the foot joint
+
+        Args:
+            angle (float): The angle to offset
+
+        Returns:
+            ArachneLeg: The leg
+        """
+        self.foot.angle += angle
+        return self
+
     def set_angles(self, hip_angle: float, knee_angle: float, foot_angle: float) -> ArachneLeg:
         """Sets the angles for all the leg joints
 
@@ -114,6 +150,21 @@ class ArachneLeg(object):
         return self.set_hip_angle(hip_angle) \
             .set_knee_angle(knee_angle) \
             .set_foot_angle(foot_angle)
+
+    def offset_angles(self, hip_angle: float, knee_angle: float, foot_angle: float) -> ArachneLeg:
+        """Adds increments to the angles for all the leg joints
+
+        Args:
+            hip_angle (float): The hip angle to offset
+            knee_angle (float): The knee angle to offset
+            foot_angle (float): The foot angle to offset
+
+        Returns:
+            ArachneLeg: The leg
+        """
+        return self.offset_hip_angle(hip_angle) \
+            .offset_knee_angle(knee_angle) \
+            .offset_foot_angle(foot_angle)
 
     def get_angles(self):
         """Get the current set of joint angles
