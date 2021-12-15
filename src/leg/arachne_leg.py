@@ -1,6 +1,6 @@
 
 from __future__ import annotations
-from joint import Joint
+from .joint import Joint
 
 class ArachneLegBuilder(object):
     """Arachne leg builder"""
@@ -56,7 +56,7 @@ class ArachneLeg(object):
         """Constructor
 
         Args:
-            hip (Joint): The hip joint
+            hip  (Joint): The hip joint
             knee (Joint): The knee joint
             foot (Joint): The foot joint
         """
@@ -140,7 +140,7 @@ class ArachneLeg(object):
         """Sets the angles for all the leg joints
 
         Args:
-            hip_angle (float): The hip angle to set
+            hip_angle  (float): The hip angle to set
             knee_angle (float): The knee angle to set
             foot_angle (float): The foot angle to set
 
@@ -155,7 +155,7 @@ class ArachneLeg(object):
         """Adds increments to the angles for all the leg joints
 
         Args:
-            hip_angle (float): The hip angle to offset
+            hip_angle  (float): The hip angle to offset
             knee_angle (float): The knee angle to offset
             foot_angle (float): The foot angle to offset
 

@@ -1,5 +1,5 @@
 
-from joint import Joint
+from .joint import Joint
 
 class Knee(Joint):
     """Knee based joint"""

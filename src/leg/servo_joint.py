@@ -1,22 +1,18 @@
 
-from gpiozero import Servo
-from joint import Joint
-
-import math
+from .joint import Joint
 
 class ServoJoint(Joint):
     """A joint comprised of a servo"""
 
-    __MAX_ANGLE: float = 1
-    __MIN_ANGLE: float = -1
-
-    def __init__(self, pin: int):
+    def __init__(self, servo, min_angle: float = 0, max_angle: float = 180):
         """constructor
 
         Args:
-            pin (int): The servo gpio pin
+            pin (float): The servo gpio pin
         """
-        self.servo = Servo(pin)
+        self.servo = servo
+        self.min_angle = min_angle
+        self.max_angle = max_angle
 
     @property
     def angle(self):
@@ -25,7 +21,7 @@ class ServoJoint(Joint):
         Returns:
             int: The servo angle
         """
-        return self.servo.value
+        return self.servo.angle
 
     @angle.setter
     def angle(self, angle: float):
@@ -34,4 +30,4 @@ class ServoJoint(Joint):
         Args:
             angle (float): The new angle value
         """
-        self.servo.value = math.min(math.max(angle, self.__MIN_ANGLE), self.__MAX_ANGLE)
+        self.servo.angle = min(max(angle, self.min_angle), self.max_angle)
