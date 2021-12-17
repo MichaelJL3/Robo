@@ -3,7 +3,10 @@ from __future__ import annotations
 from time import sleep
 
 def set_all_hips(legs, angle: float, delay: float = .3):
-    (nw, ne, sw, se) = legs
+    nw = legs[0]
+    ne = legs[1]
+    sw = legs[2]
+    se = legs[3]
 
     nw.set_hip_angle(angle)
     ne.set_hip_angle(angle)
@@ -12,7 +15,10 @@ def set_all_hips(legs, angle: float, delay: float = .3):
     sleep(delay)
 
 def set_all_knees(legs, angle: float, delay: float = .3):
-    (nw, ne, sw, se) = legs
+    nw = legs[0]
+    ne = legs[1]
+    sw = legs[2]
+    se = legs[3]
 
     nw.set_knee_angle(angle)
     ne.set_knee_angle(angle)
@@ -21,7 +27,10 @@ def set_all_knees(legs, angle: float, delay: float = .3):
     sleep(delay)
 
 def set_all_feet(legs, angle: float, delay: float = .3):
-    (nw, ne, sw, se) = legs
+    nw = legs[0]
+    ne = legs[1]
+    sw = legs[2]
+    se = legs[3]
 
     nw.set_foot_angle(angle)
     ne.set_foot_angle(angle)
@@ -34,20 +43,23 @@ def awaken(legs):
     set_all_feet(legs, 60)
     set_all_knees(legs, 50)
 
-def sleep(legs):
+def disable(legs):
     set_all_feet(legs, 180)
     set_all_knees(legs, 0)
     set_all_feet(legs, 0)
     set_all_hips(legs, 0)
 
-def step(leg, foot_angle: float, hip_angle: float, delay: float = .3)
+def step(leg, foot_angle: float, hip_angle: float, delay: float = .3):
     leg.offset_foot_angle(foot_angle)
     leg.offset_hip_angle(hip_angle)
     leg.offest_foot_angle(-foot_angle)
     sleep(delay)
 
-def step(legs):
-    (nw, ne, sw, se) = legs
+def step(*legs):
+    nw = legs[0]
+    ne = legs[1]
+    sw = legs[2]
+    se = legs[3]
 
     step(nw, 5, 10)
     step(se, 5, -10)

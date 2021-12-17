@@ -19,7 +19,7 @@ class ReversedJoint(Joint):
         Returns:
             int: The joint angle
         """
-        return self.joint.angle
+        return self.max_angle - self.joint.angle
 
     @angle.setter
     def angle(self, angle: float):
