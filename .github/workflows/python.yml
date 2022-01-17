@@ -1,0 +1,27 @@
+name: python3
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup python3
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+    - name: Test
+      run: |
+        coverage run tests.py 
+        coverage xml
+    - name: CodeCov
+      uses: codecov/codecov-action@v2.1.0
