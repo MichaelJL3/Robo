@@ -6,6 +6,8 @@ import unittest
 from src.motion.frame import Frame
 
 class TestFrame(unittest.TestCase):
+    """Frame tests"""
+
     def test_required_variables_exist(self):
         """Testing only to ensure the 4 minimum frame requirements for DH are defined"""
         frame = Frame(1, 1, 1, 1)

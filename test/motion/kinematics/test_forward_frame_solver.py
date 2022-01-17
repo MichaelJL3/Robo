@@ -1,9 +1,10 @@
 
 import unittest
-import numpy.testing as nptest
 
 from typing import Tuple
 from parameterized import parameterized
+
+import numpy.testing as nptest
 
 from src.motion.frame import Frame
 from src.motion.kinematics.forward_frame_solver import ForwardKinematicFrameSolver

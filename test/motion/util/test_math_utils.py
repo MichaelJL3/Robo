@@ -8,6 +8,8 @@ from parameterized import parameterized
 from src.motion.util.math_utils import loc_theta_degrees, loc_degrees, pythagorean_side
 
 class TestMathUtils(unittest.TestCase):
+    """Math utilities tests"""
+
     @parameterized.expand([
         [3, 4, 60, 3.60],
         [3, 3, 90, 4.24]

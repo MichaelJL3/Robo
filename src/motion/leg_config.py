@@ -1,8 +1,7 @@
 
-from dataclasses import dataclass
-
-
 """Leg configuration"""
+
+from dataclasses import dataclass
 
 @dataclass
 class LegConfig:

@@ -27,5 +27,5 @@ def frame_3d_transform_matrix(frame: Frame):
         0,          alpha_sin,              alpha_cos,             frame.delta,
         0,          0,                      0,                     1
     ]
-    
+
     return np.array(matrix).reshape(4, 4)

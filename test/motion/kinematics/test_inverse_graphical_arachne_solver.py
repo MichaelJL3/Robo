@@ -1,9 +1,10 @@
 
 import unittest
-import numpy.testing as nptest
 
 from typing import Tuple
 from parameterized import parameterized
+
+import numpy.testing as nptest
 
 from src.motion.leg_config import LegConfig
 from src.motion.kinematics.inverse_graphical_arachne_solver import InverseKinematicGraphicalArachneSolver
