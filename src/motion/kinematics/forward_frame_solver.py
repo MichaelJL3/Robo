@@ -3,9 +3,9 @@ from functools import reduce
 from typing import List
 
 from ..frame import Frame
-from ..transform import FrameTransform
+from ..transform import frame_3d_transform_matrix
 
-class ForwardKinematicFrameSolver(object):
+class ForwardKinematicFrameSolver:
     """Forward kinematics frame solver class"""
 
     @staticmethod
@@ -19,7 +19,7 @@ class ForwardKinematicFrameSolver(object):
             Tuple[float, float, float]: The effector position
         """
 
-        transforms = map(FrameTransform.apply_3d, frames)
+        transforms = map(frame_3d_transform_matrix, frames)
         effector = reduce(lambda a, b: a.dot(b), transforms)
 
         return (effector[0][3], effector[2][3], effector[1][3])

@@ -1,9 +1,11 @@
 
+"""Reference frames"""
+
 from __future__ import annotations
 from dataclasses import dataclass
 
 @dataclass
-class Frame(object):
+class Frame:
     """DH Frame class"""
 
     theta: float = 0.0 # Rotation along Z axis of frame - 1
@@ -11,31 +13,31 @@ class Frame(object):
     alpha: float = 0.0 # Rotation along X to line up frames Z and frame Z - 1 axis
     rho:   float = 0.0 # X distance between frame and frame - 1
 
-    def __add__(self, o):
+    def __add__(self, frame_b):
         """Combine two frames
 
         Args:
-            o (Frame): frame operand
+            frame_b (Frame): frame operand
 
         Returns:
             Frame: the combined frame
         """
-        return Frame.combine(self, o)
+        return Frame.combine(self, frame_b)
 
     @staticmethod
-    def combine(a, b):
+    def combine(frame_a, frame_b):
         """Combine two frames
 
         Args:
-            a (Frame): frame operand
-            b (Frame): frame operand
+            frame_a (Frame): frame operand
+            frame_b (Frame): frame operand
 
         Returns:
             Frame: the combined frame
         """
         return Frame(\
-            theta = a.theta + b.theta,\
-            delta = a.delta + b.delta,\
-            alpha = a.alpha + b.alpha,\
-            rho = a.rho + b.rho
+            theta = frame_a.theta + frame_b.theta,\
+            delta = frame_a.delta + frame_b.delta,\
+            alpha = frame_a.alpha + frame_b.alpha,\
+            rho = frame_a.rho + frame_b.rho
         )

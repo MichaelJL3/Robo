@@ -5,7 +5,7 @@ from typing import Tuple
 from ..leg_config import LegConfig
 from ..util.math_utils import loc_theta_degrees
 
-class InverseKinematicGraphicalArachneSolver(object):
+class InverseKinematicGraphicalArachneSolver:
     """Inverse kinematics graphical solver for quadruped"""
 
     @staticmethod

@@ -1,4 +1,6 @@
 
+"""Frame tests"""
+
 import unittest
 
 from src.motion.frame import Frame

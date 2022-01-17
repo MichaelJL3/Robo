@@ -1,11 +1,13 @@
 
+"""Transformation tests"""
+
 import unittest
 import numpy.testing as nptest
 
 from parameterized import parameterized
 
 from src.motion.frame import Frame
-from src.motion.transform import FrameTransform
+from src.motion.transform import frame_3d_transform_matrix
 
 class TestFrameTrasnform(unittest.TestCase):
     @parameterized.expand([
@@ -24,8 +26,7 @@ class TestFrameTrasnform(unittest.TestCase):
             theta (float): theta
             expected ([float]): expected transform matrix
         """
-
         frame = Frame(theta, delta, alpha, rho)
-        transform = FrameTransform.apply_3d(frame)
+        transform = frame_3d_transform_matrix(frame)
 
         nptest.assert_array_almost_equal(transform, expected, decimal = 3)
