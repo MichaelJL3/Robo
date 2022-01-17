@@ -54,11 +54,6 @@ def __quadrant_conversions__(theta: float) -> Tuple[float, float, float]:
     elif theta <= 180:
         #Z/X are reversed based on current servo layout
         return (1, 1, -1)
-    elif theta <= 270:
-        return (-1, 1, -1)
-    else:
-        #Z/X are reversed based on current servo layout
-        return (-1, 1, 1)
 
 def __convert_quadrant__(theta: float, x: float, y: float, z: float) -> Tuple[float, float, float]:
     """Convert the X/Z values based on the current quadrant of the base angle
