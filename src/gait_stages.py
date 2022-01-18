@@ -1,77 +1,57 @@
 
+"""Script for test giat"""
+
+from typing import List, Tuple
 from pwm_to_angle import convert_pwm_to_angle
 
-def move_1():
+def __move__1() -> Tuple[float, float, float]:
+    """calculate the first set of rotations
+
+    Returns:
+        Tuple[float, float, float]: the rotations
+    """
     pwm = 300
-    height = 0
-    b_d = 1
-    m_d = -1
-    e_d = -1
 
-    w_v = 200
-    w_m = 30
+    theta_1 = convert_pwm_to_angle(pwm + 30)
+    theta_2 = theta_3 = convert_pwm_to_angle(pwm - 200)
 
-    b = pwm + w_m * b_d
-    m = pwm + (w_v - height) * m_d
-    e = pwm + w_v * e_d
+    return (theta_1, theta_2, theta_3)
 
-    return (b, m, e)
+def __move__2() -> Tuple[float, float, float]:
+    """calculate the second set of rotations
 
-def move_2():
+    Returns:
+        Tuple[float, float, float]: the rotations
+    """
     pwm = 300
-    height = 0
-    b_d = 1
-    m_d = -1
 
-    w_h = 120
-    w_m = 30
+    theta_1 = convert_pwm_to_angle(pwm + 150)
+    theta_3 = theta_2 = convert_pwm_to_angle(pwm)
 
-    b = pwm + (w_m + w_h) * b_d
-    m = pwm - height * m_d
-    e = pwm
+    return (theta_1, theta_2, theta_3)
 
-    return (b, m, e)
+def __move_n__(index: int) -> Tuple[float, float, float]:
+    """calculate the gait rotation based on index
 
-def move_n(n):
+    Returns:
+        Tuple[float, float, float]: the rotations
+    """
+    if index == 0:
+        return __move__1()
+    if index == 1:
+        return __move__2()
+
     pwm = 300
-    height = 0
-    b_d = 1
-    m_d = -1
 
-    w_h = 120
-    w_m = 30
+    theta_1 = convert_pwm_to_angle(pwm + (150 * (8-index) / 3 - 120))
+    theta_3 = theta_2 = convert_pwm_to_angle(pwm)
 
-    b = pwm + (w_m + w_h * (6-(n-2))/3 - w_h) * b_d
-    m = pwm - height * m_d
-    e = pwm
+    return (theta_1, theta_2, theta_3)
 
-    return (b, m, e)
+def gait() -> List[float]:
+    """Get the test gait steps
 
-def convert_move(move):
-    b, m, e = move
-    return (convert_pwm_to_angle(b), convert_pwm_to_angle(m), convert_pwm_to_angle(e))
-
-def gait():
-    m1 = move_1()
-    m2 = move_2()
-    
-    st_moves = [m1, m2]
-    n_moves = [move_n(i) for i in range(3, 9)]
-
-    return st_moves + n_moves
-
-def move_angles(moves):
-    return list(map(lambda m: convert_move(m), moves))
-
-if __name__ == '__main__':
-    moves = gait()
-
-    print("pwm moves 1-8")
-    for move in moves:
-        print(move)
-
-    angles = move_angles(moves)
-
-    print("angle moves 1-8")
-    for move_angle in angles:
-        print(move_angle)
+    Returns:
+        [float]: testing gait
+    """
+    return [__move_n__(i) for i in range(1, 9)]

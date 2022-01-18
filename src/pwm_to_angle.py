@@ -1,10 +1,22 @@
 
+"""Script for converting pwm to angle"""
+
 import sys
 
-def convert_pwm_to_angle(pwm):
+def convert_pwm_to_angle(pwm: float) -> float:
+    """Convert pwm to rotation angle
+
+    Args:
+        pwm (float): the pwm signal
+
+    Returns:
+        float: the rotation angle
+    """
     return (pwm - 100) / 2.55
 
-if __name__ == '__main__':
+def main():
+    """Main script"""
+
     args = sys.argv[1:]
 
     pwm = int(args[0])
@@ -12,3 +24,5 @@ if __name__ == '__main__':
 
     print(f'{pwm} -> {angle}')
 
+if __name__ == '__main__':
+    main()
