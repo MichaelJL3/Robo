@@ -35,10 +35,10 @@ class TestForwardKinematicGraphicalArachneSolver(unittest.TestCase):
 
         nptest.assert_almost_equal(expected, pos, decimal = 3)
 
-    def __test_config__(self) -> LegConfig:
-        """Mock frame data
+def __test_config__() -> LegConfig:
+    """Mock frame data
 
-        Returns:
-            LegConfig: mock config
-        """
-        return LegConfig(66.0, 31.0, 77.0)
+    Returns:
+        LegConfig: mock config
+    """
+    return LegConfig(66.0, 31.0, 77.0)

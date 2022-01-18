@@ -40,14 +40,14 @@ class TestForwardFrameSolver(unittest.TestCase):
 
         nptest.assert_almost_equal(expected, pos, decimal = 3)
 
-    def __test_frames__(self):
-        """Mock frame data
+def __test_frames__():
+    """Mock frame data
 
-        Returns:
-            List[Frame]: mock frames
-        """
-        return [
-            Frame(rho = 66.0, alpha = 90.0, theta = 90.0),
-            Frame(rho = 31.0, theta = 90.0),
-            Frame(rho = 77.0)
-        ]
+    Returns:
+        List[Frame]: mock frames
+    """
+    return [
+        Frame(rho = 66.0, alpha = 90.0, theta = 90.0),
+        Frame(rho = 31.0, theta = 90.0),
+        Frame(rho = 77.0)
+    ]
