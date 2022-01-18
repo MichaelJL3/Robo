@@ -9,7 +9,8 @@ from parameterized import parameterized
 import numpy.testing as nptest
 
 from src.motion.leg_config import LegConfig
-from motion.kinematics.inverse_graphical_arachne import InverseKinematicGraphicalArachne
+import src.motion.kinematics.inverse_graphical_arachne as ikg
+from test.motion.kinematics.mock_config import mock_leg_config
 
 class TestInverseKinematicGraphicalArachneSolver(unittest.TestCase):
     """Forward kinematic tests based on graphical analysis"""
@@ -29,16 +30,8 @@ class TestInverseKinematicGraphicalArachneSolver(unittest.TestCase):
             dst (Tuple[float, float, float]): the input destination
             expected (Tuple[float, float, float]): the expected theta rotations output
         """
-        config = __test_config__()
+        config = mock_leg_config()
 
-        pos = InverseKinematicGraphicalArachne.solve(config, dst)
+        pos = ikg.solve_inverse_kinematic(config, dst)
 
         nptest.assert_almost_equal(expected, pos, decimal = 3)
-
-def __test_config__() -> LegConfig:
-    """Mock frame data
-
-    Returns:
-        LegConfig: mock config
-    """
-    return LegConfig(66.0, 31.0, 77.0)

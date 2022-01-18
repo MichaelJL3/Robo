@@ -9,7 +9,7 @@ from parameterized import parameterized
 import numpy.testing as nptest
 
 from src.motion.frame import Frame
-from motion.kinematics.forward_frame import ForwardKinematicFrame
+import src.motion.kinematics.forward_frame as kfk
 
 class TestForwardFrameSolver(unittest.TestCase):
     """Forward kinematic tests based on references frames"""
@@ -31,12 +31,12 @@ class TestForwardFrameSolver(unittest.TestCase):
             expected (Tuple[float, float, float]): the expected position output
         """
         frames = __test_frames__()
-        
+
         # modify the frames by the new set of thetas
         for frame, theta in zip(frames, thetas):
             frame.theta -= theta
 
-        pos = ForwardKinematicFrame.solve(frames)
+        pos = kfk.solve_forward_kinematic(frames)
 
         nptest.assert_almost_equal(expected, pos, decimal = 3)
 

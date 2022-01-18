@@ -7,35 +7,31 @@ from typing import Tuple
 from ..leg_config import LegConfig
 from ..util.math_utils import (loc_theta_degrees, loc_degrees, pythagorean_side)
 
-class ForwardKinematicGraphicalArachne:
-    """Forward kinematics graphical solver for quadruped"""
+def solve_forward_kinematic(config: LegConfig, thetas: Tuple[float, float, float]) \
+    -> Tuple[float, float, float]:
+    """Calculate the forward kinematics for a graphically mapped arache leg (3DOF)
 
-    @staticmethod
-    def solve(config: LegConfig, thetas: Tuple[float, float, float]) \
-        -> Tuple[float, float, float]:
-        """Calculate the forward kinematics for a graphically mapped arache leg (3DOF)
+    Args:
+        config (LegConfig): the leg configuration
+        thetas (Tuple[float, float, float]): the rotations of the leg
 
-        Args:
-            config (LegConfig): the leg configuration
-            thetas (Tuple[float, float, float]): the rotations of the leg
+    Returns:
+        Tuple[float, float, float]: the location of the end effector relative to the base
+    """
+    theta_1, theta_2, theta_3 = thetas
 
-        Returns:
-            Tuple[float, float, float]: the location of the end effector relative to the base
-        """
-        theta_1, theta_2, theta_3 = thetas
+    inner_hypotenus = loc_degrees(config.femur_length, config.tibia_length, 180 - theta_3)
 
-        inner_hypotenus = loc_degrees(config.femur_length, config.tibia_length, 180 - theta_3)
+    alpha_2 = loc_theta_degrees(config.femur_length, inner_hypotenus, config.tibia_length)
+    alpha_1 = theta_2 + alpha_2
 
-        alpha_2 = loc_theta_degrees(config.femur_length, inner_hypotenus, config.tibia_length)
-        alpha_1 = theta_2 + alpha_2
+    p_y = math.cos(math.radians(alpha_1)) * inner_hypotenus
+    diagonal_length = pythagorean_side(p_y, inner_hypotenus) + config.coaxia_length
 
-        p_y = math.cos(math.radians(alpha_1)) * inner_hypotenus
-        diagonal_length = pythagorean_side(p_y, inner_hypotenus) + config.coaxia_length
+    p_x = diagonal_length * math.sin(math.radians(theta_1))
+    p_z = pythagorean_side(p_x, diagonal_length)
 
-        p_x = diagonal_length * math.sin(math.radians(theta_1))
-        p_z = pythagorean_side(p_x, diagonal_length)
-
-        return __convert_quadrant__(theta_1, p_x, p_y, p_z)
+    return __convert_quadrant__(theta_1, p_x, p_y, p_z)
 
 def __quadrant_conversions__(theta: float) -> Tuple[float, float, float]:
     """X/Z negative scaling on base theta
