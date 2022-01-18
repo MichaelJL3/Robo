@@ -1,11 +1,10 @@
 
-from dataclasses import dataclass
-
+"""Leg configuration"""
 
 from dataclasses import dataclass
 
 @dataclass
-class LegConfig(object):
+class LegConfig:
     """Leg configuation"""
 
     coaxia_length: float = 0
