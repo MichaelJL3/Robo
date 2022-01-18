@@ -1,3 +1,6 @@
+
+"""motion package setup"""
+
 import setuptools
 
 setuptools.setup(name='robo.motion',
