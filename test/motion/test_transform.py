@@ -46,4 +46,5 @@ class TestFrameTrasnform(unittest.TestCase):
             expected ([float]): expected transform matrix
         """
         transform = frame_3d_transform_matrix(frame)
+        self.assertEqual(len(expected), len(transform))
         nptest.assert_array_almost_equal(transform, expected, decimal = 3)

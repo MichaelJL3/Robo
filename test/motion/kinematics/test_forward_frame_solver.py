@@ -9,7 +9,7 @@ from parameterized import parameterized
 import numpy.testing as nptest
 
 from src.motion.frame import Frame
-import src.motion.kinematics.forward_frame as kfk
+import src.motion.kinematics.forward_frame as fkinematics
 
 class TestForwardFrameSolver(unittest.TestCase):
     """Forward kinematic tests based on references frames"""
@@ -36,7 +36,7 @@ class TestForwardFrameSolver(unittest.TestCase):
         for frame, theta in zip(frames, thetas):
             frame.theta -= theta
 
-        pos = kfk.solve_forward_kinematic(frames)
+        pos = fkinematics.solve_forward_kinematic(frames)
 
         self.assertEqual(len(expected), len(pos))
         nptest.assert_almost_equal(expected, pos, decimal = 3)
