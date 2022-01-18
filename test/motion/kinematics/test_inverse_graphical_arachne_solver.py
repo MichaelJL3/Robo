@@ -29,7 +29,7 @@ class TestInverseKinematicGraphicalArachneSolver(unittest.TestCase):
             dst (Tuple[float, float, float]): the input destination
             expected (Tuple[float, float, float]): the expected theta rotations output
         """
-        config = self.__test_config__()
+        config = __test_config__()
 
         pos = InverseKinematicGraphicalArachneSolver.solve(config, dst)
 

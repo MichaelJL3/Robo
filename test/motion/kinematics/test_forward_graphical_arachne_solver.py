@@ -29,7 +29,7 @@ class TestForwardKinematicGraphicalArachneSolver(unittest.TestCase):
             thetas (Tuple[float, float, float]): the input test theta rotations
             expected (Tuple[float, float, float]): the expected position output
         """
-        config = self.__test_config__()
+        config = __test_config__()
         
         pos = ForwardKinematicGraphicalArachneSolver.solve(config, thetas)
 

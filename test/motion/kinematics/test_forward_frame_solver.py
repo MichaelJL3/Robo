@@ -30,7 +30,7 @@ class TestForwardFrameSolver(unittest.TestCase):
             thetas (Tuple[float, float, float]): the input test theta rotations
             expected (Tuple[float, float, float]): the expected position output
         """
-        frames = self.__test_frames__()
+        frames = __test_frames__()
         
         # modify the frames by the new set of thetas
         for frame, theta in zip(frames, thetas):
