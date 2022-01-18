@@ -4,13 +4,12 @@
 import unittest
 
 from typing import Tuple
+from test.motion.kinematics.mock_config import mock_leg_config
 from parameterized import parameterized
 
 import numpy.testing as nptest
 
-from src.motion.leg_config import LegConfig
 import src.motion.kinematics.inverse_graphical_arachne as ikg
-from test.motion.kinematics.mock_config import mock_leg_config
 
 class TestInverseKinematicGraphicalArachneSolver(unittest.TestCase):
     """Forward kinematic tests based on graphical analysis"""
@@ -34,4 +33,5 @@ class TestInverseKinematicGraphicalArachneSolver(unittest.TestCase):
 
         pos = ikg.solve_inverse_kinematic(config, dst)
 
+        self.assertEqual(len(expected), len(pos))
         nptest.assert_almost_equal(expected, pos, decimal = 3)

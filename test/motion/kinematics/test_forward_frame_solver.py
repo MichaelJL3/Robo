@@ -38,6 +38,7 @@ class TestForwardFrameSolver(unittest.TestCase):
 
         pos = kfk.solve_forward_kinematic(frames)
 
+        self.assertEqual(len(expected), len(pos))
         nptest.assert_almost_equal(expected, pos, decimal = 3)
 
 def __test_frames__():

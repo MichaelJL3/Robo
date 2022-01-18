@@ -7,7 +7,8 @@ from typing import Tuple
 from ..leg_config import LegConfig
 from ..util.math_utils import loc_theta_degrees
 
-def solve_inverse_kinematic(config: LegConfig, dst: Tuple[float, float, float]) -> Tuple[float, float, float]:
+def solve_inverse_kinematic(config: LegConfig, dst: Tuple[float, float, float]) \
+    -> Tuple[float, float, float]:
     """Calculate the inverse kinematics for a graphically mapped arache leg (3DOF)
 
     Args:
