@@ -7,7 +7,7 @@ from typing import List
 from ..frame import Frame
 from ..transform import frame_3d_transform_matrix
 
-class ForwardKinematicFrameSolver:
+class ForwardKinematicFrame:
     """Forward kinematics frame solver class"""
 
     @staticmethod

@@ -7,7 +7,7 @@ from typing import Tuple
 from ..leg_config import LegConfig
 from ..util.math_utils import (loc_theta_degrees, loc_degrees, pythagorean_side)
 
-class ForwardKinematicGraphicalArachneSolver:
+class ForwardKinematicGraphicalArachne:
     """Forward kinematics graphical solver for quadruped"""
 
     @staticmethod

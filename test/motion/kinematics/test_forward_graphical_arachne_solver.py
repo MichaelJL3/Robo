@@ -9,7 +9,7 @@ from parameterized import parameterized
 import numpy.testing as nptest
 
 from src.motion.leg_config import LegConfig
-from src.motion.kinematics.forward_graphical_arachne_solver import ForwardKinematicGraphicalArachneSolver
+from motion.kinematics.forward_graphical_arachne import ForwardKinematicGraphicalArachne
 
 class TestForwardKinematicGraphicalArachneSolver(unittest.TestCase):
     """Forward kinematic tests based on graphical analysis"""
@@ -31,7 +31,7 @@ class TestForwardKinematicGraphicalArachneSolver(unittest.TestCase):
         """
         config = __test_config__()
         
-        pos = ForwardKinematicGraphicalArachneSolver.solve(config, thetas)
+        pos = ForwardKinematicGraphicalArachne.solve(config, thetas)
 
         nptest.assert_almost_equal(expected, pos, decimal = 3)
 

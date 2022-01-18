@@ -6,9 +6,9 @@ from gait_stages import gait
 from gait_stages import move_angles
 from motion.leg_config import LegConfig
 from motion.frame import Frame
-from motion.kinematics.forward_frame_solver import ForwardKinematicFrameSolver
-from motion.kinematics.forward_graphical_arachne_solver import ForwardKinematicGraphicalArachneSolver
-from motion.kinematics.inverse_graphical_arachne_solver import InverseKinematicGraphicalArachneSolver
+from motion.kinematics.forward_frame import ForwardKinematicFrame
+from motion.kinematics.forward_graphical_arachne import ForwardKinematicGraphicalArachne
+from motion.kinematics.inverse_graphical_arachne import InverseKinematicGraphicalArachne
 
 #kit = ServoKit(channels = 16)
 
@@ -20,15 +20,15 @@ def test_forward(thetas):
         Frame(rho = 77, theta = -thetas[2]), \
     ]
 
-    return ForwardKinematicFrameSolver.solve(frames)
+    return ForwardKinematicFrame.solve(frames)
 
 def test_inverse(dst):
     config = LegConfig(66.0, 31.0, 77.0)
-    return InverseKinematicGraphicalArachneSolver.solve(config, dst)
+    return InverseKinematicGraphicalArachne.solve(config, dst)
 
 def test_forward_old(thetas):
     config = LegConfig(66.0, 31.0, 77.0)
-    return ForwardKinematicGraphicalArachneSolver.solve(config, thetas)
+    return ForwardKinematicGraphicalArachne.solve(config, thetas)
 
 if __name__ == '__main__':
     moves = move_angles(gait()) + [(0, 0, 0), (135, 0, 90)]

@@ -47,3 +47,5 @@ class TestFrameTrasnform(unittest.TestCase):
         """
         transform = frame_3d_transform_matrix(frame)
         nptest.assert_array_almost_equal(transform, expected, decimal = 3)
+        # for linter to shutup about self not being used
+        self.assertTrue(True)
