@@ -1,6 +1,4 @@
 
-#pylint: skip-file
-
 """Script for converting pwm to angle"""
 
 import sys
