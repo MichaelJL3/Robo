@@ -1,6 +1,9 @@
 
 """Testing gait & kinematic scripts"""
 
+import sys
+print(sys.path)
+
 from typing import Tuple
 from gait_stages import gait
 from motion.leg_config import LegConfig
@@ -19,7 +22,7 @@ def forward_kinematics(thetas: Tuple[float, float, float]) -> Tuple[float, float
     """
 
     #translation (90, 90, 0)
-    frames = [\
+    frames = [ \
         Frame(rho = 66, alpha = 90, theta = 90 - thetas[0]), \
         Frame(rho = 31, theta = 90 - thetas[1]), \
         Frame(rho = 77, theta = -thetas[2]), \
@@ -27,7 +30,9 @@ def forward_kinematics(thetas: Tuple[float, float, float]) -> Tuple[float, float
 
     return fkinematics.solve_forward_kinematic(frames)
 
-if __name__ == '__main__':
+def main():
+    """Testing script for kinematics"""
+
     config = LegConfig(66.0, 31.0, 77.0)
 
     for rotations in gait():
@@ -38,3 +43,6 @@ if __name__ == '__main__':
         print(rotations)
         print(dst)
         print(thetas)
+
+if __name__ == '__main__':
+    main()

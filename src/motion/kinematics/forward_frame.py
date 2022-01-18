@@ -4,8 +4,8 @@
 from functools import reduce
 from typing import List
 
-from ..frame import Frame
-from ..transform import frame_3d_transform_matrix
+from motion.frame import Frame
+from motion.transform import frame_3d_transform_matrix
 
 def solve_forward_kinematic(frames: List[Frame]):
     """fetch effector position based on frames theta rotations
