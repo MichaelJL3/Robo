@@ -1,4 +1,6 @@
 
+#pylint: skip-file
+
 """Script for test giat"""
 
 from typing import List, Tuple
