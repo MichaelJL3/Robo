@@ -1,4 +1,6 @@
 
+"""Forward kinematic tests based on graphical analysis"""
+
 import unittest
 
 from typing import Tuple
@@ -10,6 +12,8 @@ from src.motion.leg_config import LegConfig
 from src.motion.kinematics.forward_graphical_arachne_solver import ForwardKinematicGraphicalArachneSolver
 
 class TestForwardKinematicGraphicalArachneSolver(unittest.TestCase):
+    """Forward kinematic tests based on graphical analysis"""
+
     @parameterized.expand([
         [(90.0,  90.0, 90.0), (97,      -77,     0     )],
         [(74.5,  78.4, 78.4), (122.092, -64.54,  33.859)],

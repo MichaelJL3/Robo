@@ -26,17 +26,17 @@ class InverseKinematicGraphicalArachneSolver:
         femur_length  = config.femur_length
         tibia_length  = config.tibia_length
 
-        x, y, z = dst
+        dst_x, dst_y, dst_z = dst
 
-        diagonal_length = math.hypot(x, z)
+        diagonal_length = math.hypot(dst_x, dst_z)
 
         inner_base = diagonal_length - coaxia_length
-        inner_hypotenuse = math.hypot(inner_base, y)
+        inner_hypotenuse = math.hypot(inner_base, dst_y)
 
-        alpha_1 = math.degrees(math.acos(y / inner_hypotenuse))
+        alpha_1 = math.degrees(math.acos(dst_y / inner_hypotenuse))
         alpha_2 = loc_theta_degrees(femur_length, inner_hypotenuse, tibia_length)
 
-        theta_1 = math.degrees(math.atan2(x, z))
+        theta_1 = math.degrees(math.atan2(dst_x, dst_z))
         theta_2 = alpha_1 - alpha_2
         theta_3 = loc_theta_degrees(femur_length, tibia_length, inner_hypotenuse)
 

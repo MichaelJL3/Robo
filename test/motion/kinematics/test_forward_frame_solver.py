@@ -1,4 +1,6 @@
 
+"""Forward kinematic tests based on references frames"""
+
 import unittest
 
 from typing import Tuple
@@ -10,6 +12,8 @@ from src.motion.frame import Frame
 from src.motion.kinematics.forward_frame_solver import ForwardKinematicFrameSolver
 
 class TestForwardFrameSolver(unittest.TestCase):
+    """Forward kinematic tests based on references frames"""
+
     @parameterized.expand([
         [(90.0,  90.0, 90.0), (97, -77, 0)],
         [(74.5,  78.4, 78.4), (122.092, -64.54, 33.859)],
@@ -18,7 +22,8 @@ class TestForwardFrameSolver(unittest.TestCase):
         [(90.2,  0.0,  0.0 ), (66, 108.0, -0.23)],
         [(137.3, 78.4, 78.4), (85.923, -64.54, -93.114)]
     ])
-    def test_solve(self, thetas: Tuple[float, float, float], expected: Tuple[float, float, float]):
+    def test_solve(self, \
+        thetas: Tuple[float, float, float], expected: Tuple[float, float, float]):
         """Test that solver copmutes forward position
 
         Args:
