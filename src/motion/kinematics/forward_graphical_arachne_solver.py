@@ -1,4 +1,6 @@
 
+"""Forward kinematics through graphical analysis"""
+
 import math
 
 from typing import Tuple
@@ -19,7 +21,6 @@ class ForwardKinematicGraphicalArachneSolver:
         Returns:
             Tuple[float, float, float]: the location of the end effector relative to the base
         """
-
         coaxia_length = config.coaxia_length
         femur_length  = config.femur_length
         tibia_length  = config.tibia_length

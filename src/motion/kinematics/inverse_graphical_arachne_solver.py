@@ -1,4 +1,6 @@
 
+"""Inverse kinematics through graphical analysis"""
+
 import math
 
 from typing import Tuple

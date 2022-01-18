@@ -1,4 +1,6 @@
 
+"""Forward kinematics through reference frames"""
+
 from functools import reduce
 from typing import List
 

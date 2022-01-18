@@ -14,7 +14,8 @@ class TestMathUtils(unittest.TestCase):
         [3, 4, 60, 3.60],
         [3, 3, 90, 4.24]
     ])
-    def test_law_of_cosines(self, side_a: float, side_b: float, theta: float, expected: float):
+    def test_law_of_cosines(self, \
+        side_a: float, side_b: float, theta: float, expected: float) -> float:
         """Test frame transforms
 
         Args:
@@ -30,7 +31,8 @@ class TestMathUtils(unittest.TestCase):
         [3, 4, 5, 90],
         [3, 3, 3, 60]
     ])
-    def test_law_of_cosines_angle(self, side_a: float, side_b: float, side_c: float, expected: float):
+    def test_law_of_cosines_angle(self, \
+        side_a: float, side_b: float, side_c: float, expected: float) -> float:
         """Test frame transforms
 
         Args:
@@ -46,7 +48,8 @@ class TestMathUtils(unittest.TestCase):
         [3, 5, 4],
         [10.5, 16.17, 12.29]
     ])
-    def test_pythagorean_side(self, side_a: float, hypotenuse: float, expected: float):
+    def test_pythagorean_side(self, \
+        side_a: float, hypotenuse: float, expected: float) -> float:
         """Test frame transforms
 
         Args:
