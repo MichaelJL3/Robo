@@ -12,7 +12,7 @@ def convert_pwm_to_angle(pwm: float) -> float:
     Returns:
         float: the rotation angle
     """
-    return (pwm - 100) / 2.55
+    return round((pwm - 100) / 2.55)
 
 def main():
     """Main script"""

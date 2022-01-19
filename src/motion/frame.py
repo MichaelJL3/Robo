@@ -35,9 +35,9 @@ class Frame:
         Returns:
             Frame: the combined frame
         """
-        return Frame(\
-            theta = frame_a.theta + frame_b.theta,\
-            delta = frame_a.delta + frame_b.delta,\
-            alpha = frame_a.alpha + frame_b.alpha,\
+        return Frame(
+            theta = frame_a.theta + frame_b.theta,
+            delta = frame_a.delta + frame_b.delta,
+            alpha = frame_a.alpha + frame_b.alpha,
             rho = frame_a.rho + frame_b.rho
         )

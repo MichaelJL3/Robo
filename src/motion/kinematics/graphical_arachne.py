@@ -32,7 +32,7 @@ def solve_inverse_kinematic(config: LegConfig, dst: Tuple[float, float, float]) 
     theta_2 = alpha_1 - alpha_2
     theta_3 = loc_theta_degrees(config.femur_length, config.tibia_length, inner_hypotenuse)
 
-    return (theta_1, theta_2, 180 - theta_3)
+    return (theta_1, theta_2, theta_3)
 
 def solve_forward_kinematic(config: LegConfig, thetas: Tuple[float, float, float]) \
     -> Tuple[float, float, float]:
