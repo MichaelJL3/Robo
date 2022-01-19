@@ -14,6 +14,11 @@ class TestGait(unittest.TestCase):
     gait_r = GaitRotational()
     gait_p = GaitPositional()
 
+    def test_gait_position_throws_unimplemented(self):
+        """Test that gait base class cannot be used directly"""
+        with self.assertRaises(NotImplementedError):
+            Gait().__gait_provider__(0)
+
     @parameterized.expand([
         [gait_p],
         [gait_r]
@@ -63,7 +68,7 @@ class TestGait(unittest.TestCase):
             index (int): the out of bound index
         """
         with self.assertRaises(ValueError):
-            next(GaitRotational().walking_generator(index))
+            next(gait.walking_generator(index))
 
     @parameterized.expand([
         [gait_p, -1],
@@ -86,4 +91,4 @@ class TestGait(unittest.TestCase):
             index (int): the out of bound index
         """
         with self.assertRaises(ValueError):
-            next(GaitRotational().turning_generator(index))
+            next(gait.turning_generator(index))
