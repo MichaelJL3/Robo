@@ -5,31 +5,20 @@ import unittest
 from parameterized import parameterized
 
 from src.gait.gait import Gait
-from src.gait.gait_positional import GaitPositional
-from src.gait.gait_rotational import GaitRotational
 
 class TestGait(unittest.TestCase):
     """Gait tests"""
-
-    gait_r = GaitRotational()
-    gait_p = GaitPositional()
 
     def test_gait_position_throws_unimplemented(self):
         """Test that gait base class cannot be used directly"""
         with self.assertRaises(NotImplementedError):
             Gait().__gait_provider__(0)
 
-    @parameterized.expand([
-        [gait_p],
-        [gait_r]
-    ])
-    def test_walking_cycle(self, gait: Gait):
-        """Test walking sequence cyclic period
-
-        Args:
-            gait (Gait): the gait
-        """
-        gen = gait.walking_generator()
+    def test_walking_cycle(self):
+        """Test walking sequence cyclic period"""
+        gait = Gait()
+        gait.__gait_provider__ = lambda x: x
+        gen = gait.turning_generator()
         cycle_length = 8
 
         expected = [next(gen) for _ in range(cycle_length)]
@@ -37,16 +26,10 @@ class TestGait(unittest.TestCase):
 
         self.assertEqual(expected, result)
 
-    @parameterized.expand([
-        [gait_p],
-        [gait_r]
-    ])
-    def test_turning_cycle(self, gait: Gait):
-        """Test turning sequence cyclic period
-
-        Args:
-            gait (Gait): the gait
-        """
+    def test_turning_cycle(self):
+        """Test turning sequence cyclic period"""
+        gait = Gait()
+        gait.__gait_provider__ = lambda x: x
         gen = gait.turning_generator()
         cycle_length = 4
 
@@ -55,40 +38,22 @@ class TestGait(unittest.TestCase):
 
         self.assertEqual(expected, result)
 
-    @parameterized.expand([
-        [gait_p, -1],
-        [gait_p, -8],
-        [gait_r, -1],
-        [gait_r, -8],
-    ])
-    def test_walking_sequence_out_of_bounds_throws(self, gait: Gait, index: int):
+    @parameterized.expand([[-1],[-8]])
+    def test_walking_sequence_out_of_bounds_throws(self, index: int):
         """Test walking sequence boundaries
 
         Args:
             index (int): the out of bound index
         """
         with self.assertRaises(ValueError):
-            next(gait.walking_generator(index))
+            next(Gait().walking_generator(index))
 
-    @parameterized.expand([
-        [gait_p, -1],
-        [gait_p, 2],
-        [gait_p, 3],
-        [gait_p, 5],
-        [gait_p, 6],
-        [gait_p, 8],
-        [gait_r, -1],
-        [gait_r, 2],
-        [gait_r, 3],
-        [gait_r, 5],
-        [gait_r, 6],
-        [gait_r, 8]
-    ])
-    def test_turning_sequence_out_of_bounds_throws(self, gait: Gait, index: int):
+    @parameterized.expand([[-1],[2],[3],[5],[6],[8],])
+    def test_turning_sequence_out_of_bounds_throws(self, index: int):
         """Test turning sequence boundaries
 
         Args:
             index (int): the out of bound index
         """
         with self.assertRaises(ValueError):
-            next(gait.turning_generator(index))
+            next(Gait().turning_generator(index))
