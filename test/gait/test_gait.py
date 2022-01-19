@@ -56,7 +56,7 @@ class TestGait(unittest.TestCase):
         [gait_r, -1],
         [gait_r, -8],
     ])
-    def test_walking_sequence_out_of_bounds_throws(self, index: int):
+    def test_walking_sequence_out_of_bounds_throws(self, gait: Gait, index: int):
         """Test walking sequence boundaries
 
         Args:
@@ -79,7 +79,7 @@ class TestGait(unittest.TestCase):
         [gait_r, 6],
         [gait_r, 8]
     ])
-    def test_turning_sequence_out_of_bounds_throws(self, index: int):
+    def test_turning_sequence_out_of_bounds_throws(self, gait: Gait, index: int):
         """Test turning sequence boundaries
 
         Args:
