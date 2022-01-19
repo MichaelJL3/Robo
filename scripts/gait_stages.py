@@ -1,57 +1,64 @@
 
 """Script for test giat"""
 
-from typing import List, Tuple
-from pwm_to_angle import convert_pwm_to_angle
+from motion.frame import Frame
+from motion.leg_config import LegConfig
+from gait.gait_rotational import GaitRotational, GaitRotational
+from gait.gait_positional import GaitPositional
+import motion.kinematics.forward_frame as fkinematics
+import motion.kinematics.graphical_arachne as gkinematics
 
-def __move__1() -> Tuple[float, float, float]:
-    """calculate the first set of rotations
+def translate(thetas):
+    return (180 - thetas[0], thetas[1], thetas[2])
 
-    Returns:
-        Tuple[float, float, float]: the rotations
-    """
-    pwm = 300
+def translate_pos(pos):
+    return (pos[0], pos[1], -pos[2])
 
-    theta_1 = convert_pwm_to_angle(pwm + 30)
-    theta_2 = theta_3 = convert_pwm_to_angle(pwm - 200)
+def forward_kinematics(thetas):
+    frames = [
+        Frame(rho = 66, alpha = 90, theta = 90 - thetas[0]),
+        Frame(rho = 31, theta = 90 - thetas[1]),
+        Frame(rho = 77, theta = -thetas[2]),
+    ]
 
-    return (theta_1, theta_2, theta_3)
+    return fkinematics.solve_forward_kinematic(frames)
 
-def __move__2() -> Tuple[float, float, float]:
-    """calculate the second set of rotations
+def clean(tup):
+    a, b, c = tup
+    return (round(a, 2), round(b, 2), round(c, 2))
 
-    Returns:
-        Tuple[float, float, float]: the rotations
-    """
-    pwm = 300
+def full_gait():
+    gait_p = GaitRotational()
+    gait_r = GaitRotational()
 
-    theta_1 = convert_pwm_to_angle(pwm + 150)
-    theta_3 = theta_2 = convert_pwm_to_angle(pwm)
+    fl = gait_r.walking_generator()
+    fr = gait_r.walking_generator(2)
+    bl = gait_r.walking_generator(4)
+    br = gait_r.walking_generator(6)
 
-    return (theta_1, theta_2, theta_3)
+    config = LegConfig(66.0, 31.0, 77.0)
 
-def __move_n__(index: int) -> Tuple[float, float, float]:
-    """calculate the gait rotation based on index
+    for i in range(8):
+        fl_thetas = next(fl)
+        fr_thetas = translate(next(fr))
+        bl_thetas = translate(next(bl))
+        br_thetas = next(br)
 
-    Returns:
-        Tuple[float, float, float]: the rotations
-    """
-    if index == 0:
-        return __move__1()
-    if index == 1:
-        return __move__2()
+        fl_pos = forward_kinematics(fl_thetas)
+        fr_pos = translate_pos(forward_kinematics(fr_thetas))
+        bl_pos = translate_pos(forward_kinematics(bl_thetas))
+        br_pos = forward_kinematics(br_thetas)
 
-    pwm = 300
+        fl_rev_thetas = gkinematics.solve_inverse_kinematic(config, fl_pos)
+        fr_rev_thetas = gkinematics.solve_inverse_kinematic(config, fr_pos)
+        bl_rev_thetas = gkinematics.solve_inverse_kinematic(config, bl_pos)
+        br_rev_thetas = gkinematics.solve_inverse_kinematic(config, br_pos)
 
-    theta_1 = convert_pwm_to_angle(pwm + (150 * (8-index) / 3 - 120))
-    theta_3 = theta_2 = convert_pwm_to_angle(pwm)
+        print("fl:", fl_thetas, "\tp:", clean(fl_pos), "\t0:", clean(fl_rev_thetas))
+        #print("fr:", fr_thetas, "\tp:", clean(fr_pos), "\t0:", clean(fr_rev_thetas))
+        #print("bl:", bl_thetas, "\tp:", clean(bl_pos), "\t0:", clean(bl_rev_thetas))
+        #print("br:", br_thetas, "\tp:", clean(br_pos), "\t0:", clean(br_rev_thetas))
+        print("-----------------------")
 
-    return (theta_1, theta_2, theta_3)
-
-def gait() -> List[float]:
-    """Get the test gait steps
-
-    Returns:
-        [float]: testing gait
-    """
-    return [__move_n__(i) for i in range(1, 9)]
+if __name__ == '__main__':
+    full_gait()
