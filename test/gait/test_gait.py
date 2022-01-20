@@ -18,7 +18,7 @@ class TestGait(unittest.TestCase):
         """Test walking sequence cyclic period"""
         gait = Gait()
         gait.__gait_provider__ = lambda x: x
-        gen = gait.turning_generator()
+        gen = gait.walking_generator()
         cycle_length = 8
 
         expected = [next(gen) for _ in range(cycle_length)]
