@@ -2,21 +2,22 @@
 """Forward kinematics through reference frames"""
 
 from functools import reduce
-from typing import List
+from typing import List, Tuple
 
 from ..frame import Frame
 from ..transform import frame_3d_transform_matrix
 
-def solve_forward_kinematic(frames: List[Frame]):
+Position = Tuple[float, float, float]
+
+def solve_forward_kinematic(frames: List[Frame]) -> Position:
     """fetch effector position based on frames theta rotations
 
     Args:
-        frames (frames[]): array of frames
+        frames (List[frames]): array of frames
 
     Returns:
-        Tuple[float, float, float]: The effector position
+        Position: The effector position
     """
-
     transforms = map(frame_3d_transform_matrix, frames)
     effector = reduce(lambda a, b: a.dot(b), transforms)
 

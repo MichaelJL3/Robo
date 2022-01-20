@@ -5,6 +5,8 @@ from typing import Tuple
 
 from .gait import Gait
 
+Position = Tuple[float, float, float]
+
 class GaitPositional(Gait):
     """Gait class"""
 
@@ -19,13 +21,13 @@ class GaitPositional(Gait):
         ( 48.50, -77.00,  84.00)
     ]
 
-    def __gait_provider__(self, index: int) -> Tuple[float, float, float]:
+    def __gait_provider__(self, index: int) -> Position:
         """Generate the gait in terms of end effector position
 
         Args:
             index (int): the step in the movement
 
         Returns:
-            Tuple[float, float, float]: the position
+            Position: the position
         """
         return self._gait_as_dst[index]

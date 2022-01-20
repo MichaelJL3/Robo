@@ -12,6 +12,8 @@ from src.motion.leg_config import LegConfig
 
 import src.motion.kinematics.graphical_arachne as gkinematics
 
+Position = Tuple[float, float, float]
+
 class TestInverseKinematicGraphicalArachneSolver(unittest.TestCase):
     """Forward kinematic tests based on graphical analysis"""
 
@@ -23,12 +25,12 @@ class TestInverseKinematicGraphicalArachneSolver(unittest.TestCase):
         [(66,       108.0,  0     ), (90.0,  0.0,  180.0 )],
         [(85.923,  -64.54, -93.114), (137.3, 78.4, 101.599)]
     ])
-    def test_solve(self, dst: Tuple[float, float, float], expected: Tuple[float, float, float]):
+    def test_solve(self, dst: Position, expected: Position):
         """Test that solver copmutes forward position
 
         Args:
-            dst (Tuple[float, float, float]): the input destination
-            expected (Tuple[float, float, float]): the expected theta rotations output
+            dst (Position): the input destination
+            expected (Position): the expected theta rotations output
         """
         config = __test_config__()
 
@@ -48,12 +50,12 @@ class TestForwardKinematicGraphicalArachneSolver(unittest.TestCase):
         [(90.2,  0.0,  0.0 ), (66,       108.0, -0.23  )],
         [(137.3, 78.4, 78.4), (85.923,  -64.54, -93.114)]
     ])
-    def test_solve(self, thetas: Tuple[float, float, float], expected: Tuple[float, float, float]):
+    def test_solve(self, thetas: Position, expected: Position):
         """Test that solver copmutes forward position
 
         Args:
-            thetas (Tuple[float, float, float]): the input test theta rotations
-            expected (Tuple[float, float, float]): the expected position output
+            thetas (Position): the input test theta rotations
+            expected (Position): the expected position output
         """
         config = __test_config__()
 

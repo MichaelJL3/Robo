@@ -2,13 +2,16 @@
 """Gait generation for movements"""
 
 from abc import abstractmethod
-from typing import Tuple
+from typing import Generator, Tuple
+
+Position = Tuple[float, float, float]
+PositionGenerator = Generator[Position, None, None]
 
 class Gait:
     """Gait class"""
 
     @abstractmethod
-    def __gait_provider__(self, _: int) -> Tuple[float, float, float]:
+    def __gait_provider__(self, _: int) -> Position:
         """[summary]
 
         Args:
@@ -18,18 +21,18 @@ class Gait:
             NotImplementedError: must be extended
 
         Returns:
-            Tuple[float, float, float]: the gait position
+            Position: the gait position
         """
         raise NotImplementedError()
 
-    def turning_generator(self, start: int = 0) -> Tuple[float, float, float]:
+    def turning_generator(self, start: int = 0) -> PositionGenerator:
         """Rotating generator for turn based gait
 
         Args:
             start (int, optional): the initial step index. Defaults to 0.
 
         Yields:
-            Tuple[float, float, float]: the leg position
+            PositionGenerator: the leg position
         """
         allowed_index = [0, 1, 4, 7]
 
@@ -42,14 +45,14 @@ class Gait:
             yield self.__gait_provider__(i)
             i = (i + 3) % 10 if i != 0 else 1
 
-    def walking_generator(self, start: int = 0) -> Tuple[float, float, float]:
+    def walking_generator(self, start: int = 0) -> PositionGenerator:
         """Rotating generator for walking gait
 
         Args:
             start (int, optional): the initial step index. Defaults to 0.
 
         Yields:
-            Tuple[float, float, float]: the leg position
+            PositionGenerator: the leg position
         """
         if start > 7 or start < 0:
             print("out of bounds")

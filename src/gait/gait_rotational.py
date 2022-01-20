@@ -4,17 +4,19 @@
 from typing import Tuple
 from .gait import Gait
 
+Position = Tuple[float, float, float]
+
 class GaitRotational(Gait):
     """Gait class"""
 
-    def __gait_provider__(self, index: int) -> Tuple[float, float, float]:
+    def __gait_provider__(self, index: int) -> Position:
         """Generate the gait in terms of angle rotations
 
         Args:
             index (int): the step in the movement
 
         Returns:
-            Tuple[float, float, float]: the rotations
+            Position: the rotations
         """
         if index == 0:
             return (90, 13, 13)

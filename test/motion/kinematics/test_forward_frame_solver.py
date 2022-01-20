@@ -11,6 +11,8 @@ import numpy.testing as nptest
 from src.motion.frame import Frame
 import src.motion.kinematics.forward_frame as fkinematics
 
+Position = Tuple[float, float, float]
+
 class TestForwardFrameSolver(unittest.TestCase):
     """Forward kinematic tests based on references frames"""
 
@@ -21,13 +23,12 @@ class TestForwardFrameSolver(unittest.TestCase):
         [(90.2,  0.0,  0.0 ), (66,       108.0, -0.23  )],
         [(137.3, 78.4, 78.4), (85.923,  -64.54, -93.114)]
     ])
-    def test_solve(self, \
-        thetas: Tuple[float, float, float], expected: Tuple[float, float, float]):
+    def test_solve(self, thetas: Position, expected: Position):
         """Test that solver copmutes forward position
 
         Args:
-            thetas (Tuple[float, float, float]): the input test theta rotations
-            expected (Tuple[float, float, float]): the expected position output
+            thetas (Position): the input test theta rotations
+            expected (Position): the expected position output
         """
         frames = __test_frames__()
 
