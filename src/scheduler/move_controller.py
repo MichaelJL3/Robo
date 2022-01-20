@@ -47,7 +47,8 @@ class MoveController:
                 self.__motion_arc__(self._gait.turning_generator(leg.turning_id), leg), \
                 self._legs))))
 
-    def rotation_iter(self, moves: Matrix3D) -> Tuple[int, float]:
+    @staticmethod
+    def rotation_iter(moves: Matrix3D) -> Tuple[int, float]:
         """Create an iterator over the 3d matrix of smoothed motions among all legs
 
         Args:

@@ -77,7 +77,7 @@ def main():
 
     walk = move_controller.walking()
 
-    for step in move_controller.rotation_iter(next(walk)):
+    for step in MoveController.rotation_iter(next(walk)):
         scheduler.enqueue(take_step(step))
 
     scheduler.join()

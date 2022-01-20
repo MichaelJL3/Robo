@@ -69,7 +69,6 @@ class TestMoveController(unittest.TestCase):
 
     def test_rotation_iter(self):
         """Test iteration order of rotation step through"""
-        move_controller = MoveController(None, None)
         mtx = nd.array([[[1, 0, 0]], [[0, 1, 1]], [[0, 0, 0]], [[0, 1, 0]]])
 
         expected = [
@@ -78,6 +77,6 @@ class TestMoveController(unittest.TestCase):
             (2, 0),(5, 1),(8, 0),(11, 0)
         ]
 
-        mv_it = move_controller.rotation_iter(mtx)
+        mv_it = MoveController.rotation_iter(mtx)
 
         self.assertEqual(expected, list(mv_it))
