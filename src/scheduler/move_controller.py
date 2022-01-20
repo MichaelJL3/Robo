@@ -2,13 +2,11 @@
 """Move controller"""
 
 from typing import Generator, List, Tuple
-
 import numpy as nd
 
-from motion.leg_state import LegState
+from motion.part import Part
+from motion.kinematics.kinematic_typing import Kinematics
 from gait.gait import Gait
-
-import motion.kinematics.graphical_arachne as gkinematics
 
 Matrix2D = List[List[float]]
 Matrix3D = List[Matrix2D]
@@ -20,13 +18,15 @@ class MoveController:
 
     _pre_defined_arc = [.02, .05, .10, .25, .50, .75, .90, .95, .98, 1]
 
-    def __init__(self, gait: Gait, legs: List[LegState], motion: List[float] = None):
+    def __init__(self, gait: Gait, kinematics: Kinematics, \
+        parts: List[Part], motion: List[float] = None):
         self._gait = gait
-        self._legs = legs
+        self._parts = parts
+        self._kinematics = kinematics
         self._motion = motion if motion else self._pre_defined_arc
 
     def walking(self) -> PositionGenerator:
-        """Get the steps needed to complete the next step accross all legs
+        """Get the steps needed to complete the next step accross all parts
 
         Yields:
             PositionGenerator: the matrix of actions
@@ -34,10 +34,10 @@ class MoveController:
         while True:
             yield nd.array(list((map(lambda leg: \
                 self.__motion_arc__(self._gait.walking_generator(leg.walking_id), leg), \
-                self._legs))))
+                self._parts))))
 
     def turning(self) -> PositionGenerator:
-        """Get the steps needed to complete the next step accross all legs
+        """Get the steps needed to complete the next step accross all parts
 
         Yields:
             PositionGenerator: the matrix of actions
@@ -45,11 +45,11 @@ class MoveController:
         while True:
             yield nd.array(list((map(lambda leg: \
                 self.__motion_arc__(self._gait.turning_generator(leg.turning_id), leg), \
-                self._legs))))
+                self._parts))))
 
     @staticmethod
     def rotation_iter(moves: Matrix3D) -> Tuple[int, float]:
-        """Create an iterator over the 3d matrix of smoothed motions among all legs
+        """Create an iterator over the 3d matrix of smoothed motions among all parts
 
         Args:
             moves (Matrix3D): the input matrix
@@ -87,17 +87,17 @@ class MoveController:
 
         return moves
 
-    def __motion_arc__(self, gen: PositionGenerator, state: LegState) -> Matrix2D:
+    def __motion_arc__(self, gen: PositionGenerator, part: Part) -> Matrix2D:
         """get the smoothed rotations for the given movement strategy
 
         Args:
             gen (PositionGenerator): the destination generator
-            state (LegState): the legs state
+            state (Part): the part state
 
         Returns:
             Matrix2D: the matrix of smoothed motions to reach the destination
         """
-        thetas = gkinematics.solve_inverse_kinematic(state.config, next(gen))
-        motion = self.__split_motion__(state.position, thetas)
-        state.position = thetas
+        thetas = self._kinematics(part.config, next(gen))
+        motion = self.__split_motion__(part.position, thetas)
+        part.position = thetas
         return motion

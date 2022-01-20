@@ -1,9 +1,8 @@
 
 """Move controller tests"""
 
-
 import unittest
-from unittest.mock import create_autospec
+from unittest.mock import Mock, create_autospec
 from typing import Generator, Tuple
 
 import numpy as nd
@@ -11,8 +10,7 @@ import numpy.testing as nptest
 
 from src.gait.gait import Gait
 from src.motion.leg_config import LegConfig
-from src.motion.leg_state import LegState
-
+from src.motion.part import Part
 from src.scheduler.move_controller import MoveController
 
 Position = Tuple[float, float, float]
@@ -26,7 +24,7 @@ class TestMoveController(unittest.TestCase):
         """Mock generator for walking
 
         Yields:
-            Position: the movement position
+            PositionGenerator: the movement position
         """
         yield (66, 108.0, 0)
 
@@ -40,17 +38,21 @@ class TestMoveController(unittest.TestCase):
         gait = create_autospec(Gait)
         gait.walking_generator.return_value = TestMoveController.__gen__()
         gait.turning_generator.return_value = TestMoveController.__gen__()
-        legs = [ LegState(LegConfig(66.0, 31.0, 77.0), (90, 90, 90), 0, 0) ]
+
+        kinematics = Mock()
+        kinematics.return_value = (90.0, 0.0, 0.0)
+
+        parts = [ Part(LegConfig(66.0, 31.0, 77.0), (90, 90, 90), 0, 0) ]
         motions = [.5, .5]
 
-        return MoveController(gait, legs, motions)
+        return MoveController(gait, kinematics, parts, motions)
 
     def test_walking(self):
         """Test walking sequence"""
         move_controller = TestMoveController.__controller_helper__()
         walking = move_controller.walking()
 
-        expected = [[[ 90.,  45., 135.],[ 90.,  45., 135.]]]
+        expected = [[[ 90.,  45., 45.],[ 90.,  45., 45.]]]
 
         step = next(walking)
         self.assertEqual((1,2,3), step.shape)
@@ -61,7 +63,7 @@ class TestMoveController(unittest.TestCase):
         move_controller = TestMoveController.__controller_helper__()
         turning = move_controller.turning()
 
-        expected = [[[ 90.,  45., 135.],[ 90.,  45., 135.]]]
+        expected = [[[ 90.,  45., 45.],[ 90.,  45., 45.]]]
 
         step = next(turning)
         self.assertEqual((1,2,3), step.shape)

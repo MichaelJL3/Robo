@@ -1,18 +1,17 @@
 
-"""Leg state"""
+"""Part"""
 
 from dataclasses import dataclass
-from typing import Tuple
+from typing import Generic, Tuple, TypeVar
 
-from .leg_config import LegConfig
-
+Type = TypeVar('Type')
 Position = Tuple[float, float, float]
 
 @dataclass
-class LegState:
-    """Leg configuation"""
+class Part:
+    """Part state/configuration"""
 
-    config: LegConfig
+    config: Generic[Type]
     position: Position
     walking_id: int
     turning_id: int

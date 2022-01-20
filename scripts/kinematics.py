@@ -4,7 +4,7 @@
 from sched import scheduler
 import sched
 from typing import Tuple
-from motion.leg_state import LegState
+from motion.part import Part
 
 from scheduler.move_controller import MoveController
 from scheduler.scheduler import Scheduler
@@ -66,13 +66,13 @@ def main():
     leg_config = LegConfig(66.0, 31.0, 77.0)
 
     legs = [
-        LegState(leg_config, (90, 90, 90), walking_id=0, turning_id=0),
-        LegState(leg_config, (90, 90, 90), walking_id=2, turning_id=4),
-        LegState(leg_config, (90, 90, 90), walking_id=4, turning_id=4),
-        LegState(leg_config, (90, 90, 90), walking_id=6, turning_id=0)
+        Part(leg_config, (90, 90, 90), walking_id=0, turning_id=0),
+        Part(leg_config, (90, 90, 90), walking_id=2, turning_id=4),
+        Part(leg_config, (90, 90, 90), walking_id=4, turning_id=4),
+        Part(leg_config, (90, 90, 90), walking_id=6, turning_id=0)
     ]
 
-    move_controller = MoveController(GaitPositional(), legs)
+    move_controller = MoveController(GaitPositional(), gkinematics.solve_inverse_kinematic, legs)
     scheduler = Scheduler(1)
 
     walk = move_controller.walking()
