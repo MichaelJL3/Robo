@@ -3,7 +3,7 @@
 
 from queue import Queue
 from threading import Thread
-from types import FunctionType
+from typing import Callable
 
 class Scheduler(Queue):
     """Scheduler class"""
@@ -34,10 +34,10 @@ class Scheduler(Queue):
             finally:
                 self.task_done()
 
-    def enqueue(self, task: FunctionType, *args, **kwargs):
+    def enqueue(self, task: Callable, *args, **kwargs):
         """Queue function for execution
 
         Args:
-            task (FunctionType): the function to execute
+            task (Callable): the function to execute
         """
         self.put((task, args or {}, kwargs or {}))
