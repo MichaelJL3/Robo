@@ -13,14 +13,6 @@ class TestControllableThread(unittest.TestCase):
         with self.assertRaises(NotImplementedError):
             ControllableThread().run()
 
-    def test_thread_start(self):
-        """Test that the thread starts up"""
-        thread = ControllableThread()
-        thread.start()
-        self.assertTrue(thread.is_alive())
-        thread.join(timeout = 5000)
-        self.assertFalse(thread.is_alive())
-
     def test_thread_control(self):
         """Test that the thread can pause/resume"""
         thread = ControllableThread()

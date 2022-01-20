@@ -7,16 +7,17 @@ from typing import Tuple
 from ..leg_config import LegConfig
 from ..util.math_utils import loc_theta_degrees, loc_degrees, pythagorean_side
 
-def solve_inverse_kinematic(config: LegConfig, dst: Tuple[float, float, float]) \
-    -> Tuple[float, float, float]:
+Position = Tuple[float, float, float]
+
+def solve_inverse_kinematic(config: LegConfig, dst: Position) -> Position:
     """Calculate the inverse kinematics for a graphically mapped arache leg (3DOF)
 
     Args:
         config (LegConfig): the leg configuration
-        dst (Tuple[float, float, float]): the desired location relative to the leg base
+        dst (Position): the desired location relative to the leg base
 
     Returns:
-        Tuple[float, float, float]: the required theta rotations to reach desired location
+        Position: the required theta rotations to reach desired location
     """
     dst_x, dst_y, dst_z = dst
 
@@ -34,16 +35,15 @@ def solve_inverse_kinematic(config: LegConfig, dst: Tuple[float, float, float]) 
 
     return (theta_1, theta_2, theta_3)
 
-def solve_forward_kinematic(config: LegConfig, thetas: Tuple[float, float, float]) \
-    -> Tuple[float, float, float]:
+def solve_forward_kinematic(config: LegConfig, thetas: Position) -> Position:
     """Calculate the forward kinematics for a graphically mapped arache leg (3DOF)
 
     Args:
         config (LegConfig): the leg configuration
-        thetas (Tuple[float, float, float]): the rotations of the leg
+        thetas (Position): the rotations of the leg
 
     Returns:
-        Tuple[float, float, float]: the location of the end effector relative to the base
+        Position: the location of the end effector relative to the base
     """
     theta_1, theta_2, theta_3 = thetas
 
@@ -60,21 +60,20 @@ def solve_forward_kinematic(config: LegConfig, thetas: Tuple[float, float, float
 
     return __convert_quadrant__(theta_1, p_x, p_y, p_z)
 
-def __quadrant_conversions__(theta: float) -> Tuple[float, float, float]:
+def __quadrant_conversions__(theta: float) -> Position:
     """X/Z negative scaling on base theta
 
     Args:
         theta (float): the base angle
 
     Returns:
-        Tuple[float, float, float]: the quadrant scaling
+        Position: the quadrant scaling
     """
 
     #Z/X are reversed based on current servo layout
     return (1, 1, 1) if theta <= 90 else (1, 1, -1)
 
-def __convert_quadrant__(theta: float, p_x: float, p_y: float, p_z: float) \
-    -> Tuple[float, float, float]:
+def __convert_quadrant__(theta: float, p_x: float, p_y: float, p_z: float) -> Position:
     """Convert the X/Z values based on the current quadrant of the base angle
 
     Args:
@@ -84,7 +83,7 @@ def __convert_quadrant__(theta: float, p_x: float, p_y: float, p_z: float) \
         p_z (float): the z position
 
     Returns:
-        Tuple[float, float, float]: the adjusted position
+        Position: the adjusted position
     """
     x_quadrant, y_quadrant, z_quadrant = __quadrant_conversions__(theta)
     return (p_x * x_quadrant, p_y * y_quadrant, p_z * z_quadrant)

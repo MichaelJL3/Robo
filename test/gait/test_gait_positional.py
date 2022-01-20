@@ -7,6 +7,8 @@ from parameterized import parameterized
 
 from src.gait.gait_positional import GaitPositional
 
+Position = Tuple[float, float, float]
+
 class TestGaitPositional(unittest.TestCase):
     """Gait tests"""
 
@@ -20,11 +22,11 @@ class TestGaitPositional(unittest.TestCase):
         [( 74.31, -77.00,  62.35), 6],
         [( 48.50, -77.00,  84.00), 7]
     ])
-    def test_walking_sequence(self, expected: Tuple[float, float, float], index: int):
+    def test_walking_sequence(self, expected: Position, index: int):
         """Test walking sequence
 
         Args:
-            expected (Tuple[float, float, float]): the expected position sequence
+            expected (Position): the expected position sequence
             index (int): the move index
         """
         gen = GaitPositional().walking_generator(index)
@@ -38,11 +40,11 @@ class TestGaitPositional(unittest.TestCase):
         [( 97.00, -77.00,   0.00), 4],
         [( 48.50, -77.00,  84.00), 7]
     ])
-    def test_turning_sequence(self, expected: Tuple[float, float, float], index: int):
+    def test_turning_sequence(self, expected: Position, index: int):
         """Test turn sequence
 
         Args:
-            expected (Tuple[float, float, float]): the expected position sequence
+            expected (Position): the expected position sequence
             index (int): the move index
         """
         gen = GaitPositional().turning_generator(index)
