@@ -9,9 +9,9 @@ from typing import Generator, Tuple
 import numpy as nd
 import numpy.testing as nptest
 
-from gait.gait import Gait
-from motion.leg_config import LegConfig
-from motion.leg_state import LegState
+from src.gait.gait import Gait
+from src.motion.leg_config import LegConfig
+from src.motion.leg_state import LegState
 
 from src.scheduler.move_controller import MoveController
 
