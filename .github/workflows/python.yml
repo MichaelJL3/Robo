@@ -34,7 +34,9 @@ jobs:
         coverage xml
     - name: CodeCov Robotics
       uses: codecov/codecov-action@v2.1.0
-      working-directory: robotics
+      with:
+        working-directory: robotics
     - name: CodeCov Arachnid
       uses: codecov/codecov-action@v2.1.0
-      working-directory: quadruped/arachnid
+      with:
+        working-directory: quadruped/arachnid
