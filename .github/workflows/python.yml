@@ -33,8 +33,8 @@ jobs:
         coverage run -m pytest
         coverage xml
     - name: CodeCov Robotics
+      uses: codecov/codecov-action@v2.1.0
       working-directory: robotics
-      uses: codecov/codecov-action@v2.1.0
     - name: CodeCov Arachnid
-      working-directory: quadruped/arachnid
       uses: codecov/codecov-action@v2.1.0
+      working-directory: quadruped/arachnid
