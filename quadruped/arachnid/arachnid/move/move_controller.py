@@ -1,17 +1,16 @@
 
 """Move controller"""
 
-from typing import Generator, List, Tuple
+from typing import List, Tuple
 import numpy as nd
 
-from motion.part import Part
-from motion.kinematics.kinematic_typing import Kinematics
-from gait.gait import Gait
+from arachnid.gait.gait import Gait
+
+from robotics.body.part import Part
+from robotics.typings.types import Position, PositionGenerator, Kinematics
 
 Matrix2D = List[List[float]]
 Matrix3D = List[Matrix2D]
-Position = Tuple[float, float, float]
-PositionGenerator = Generator[Position, None, None]
 
 class MoveController:
     """Move controller class"""
