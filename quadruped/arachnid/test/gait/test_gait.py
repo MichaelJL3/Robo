@@ -6,7 +6,7 @@ from parameterized import parameterized
 
 from arachnid.gait.gait import Gait
 
-class TestGaitArachne(unittest.TestCase):
+class TestGait(unittest.TestCase):
     """Gait tests"""
 
     def test_gait_position_throws_unimplemented(self):
