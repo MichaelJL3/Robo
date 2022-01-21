@@ -20,10 +20,18 @@ jobs:
     - name: Install dependencies
       run: |
         pip install -r requirements.txt
-        pip install -e src
-    - name: Test
+        pip install -e robotics
+        pip install -e quadruped\arachnid
+    - name: Test Robotics
+      working-directory: robotics
       run: |
-        coverage run -m pytest test
+        coverage run -m pytest robotics\test
+        coverage xml
+    - name: Test Arachnid
+      working-directory: quadruped\arachnid
+      run: |
+        coverage run -m pytest quadruped\arachnid\test
         coverage xml
     - name: CodeCov
+      file: ./**/*.xml
       uses: codecov/codecov-action@v2.1.0

@@ -2,3 +2,4 @@ coverage
 numpy
 parameterized
 pytest
+pytest-cov

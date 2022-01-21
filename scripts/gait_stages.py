@@ -1,10 +1,9 @@
 
 """Script for test giat"""
 
+from gait.gait_rotational import GaitRotational
 from motion.frame import Frame
 from motion.leg_config import LegConfig
-from gait.gait_rotational import GaitRotational, GaitRotational
-from gait.gait_positional import GaitPositional
 import motion.kinematics.forward_frame as fkinematics
 import motion.kinematics.graphical_arachne as gkinematics
 
@@ -28,7 +27,6 @@ def clean(tup):
     return (round(a, 2), round(b, 2), round(c, 2))
 
 def full_gait():
-    gait_p = GaitRotational()
     gait_r = GaitRotational()
 
     fl = gait_r.walking_generator()
@@ -38,7 +36,7 @@ def full_gait():
 
     config = LegConfig(66.0, 31.0, 77.0)
 
-    for i in range(8):
+    for _ in range(8):
         fl_thetas = next(fl)
         fr_thetas = translate(next(fr))
         bl_thetas = translate(next(bl))
@@ -55,9 +53,9 @@ def full_gait():
         br_rev_thetas = gkinematics.solve_inverse_kinematic(config, br_pos)
 
         print("fl:", fl_thetas, "\tp:", clean(fl_pos), "\t0:", clean(fl_rev_thetas))
-        #print("fr:", fr_thetas, "\tp:", clean(fr_pos), "\t0:", clean(fr_rev_thetas))
-        #print("bl:", bl_thetas, "\tp:", clean(bl_pos), "\t0:", clean(bl_rev_thetas))
-        #print("br:", br_thetas, "\tp:", clean(br_pos), "\t0:", clean(br_rev_thetas))
+        print("fr:", fr_thetas, "\tp:", clean(fr_pos), "\t0:", clean(fr_rev_thetas))
+        print("bl:", bl_thetas, "\tp:", clean(bl_pos), "\t0:", clean(bl_rev_thetas))
+        print("br:", br_thetas, "\tp:", clean(br_pos), "\t0:", clean(br_rev_thetas))
         print("-----------------------")
 
 if __name__ == '__main__':

@@ -1,22 +1,19 @@
 
 """Testing gait & kinematic scripts"""
 
-from sched import scheduler
-import sched
-from typing import Tuple
-from motion.part import Part
+from robotics.scheduler.scheduler import Scheduler
+from robotics.body.leg_3dof import Leg3DOF
+from robotics.body.part import Part
+from robotics.motion.frame.frame import Frame
+from robotics.typings.types import Position
 
-from scheduler.move_controller import MoveController
-from scheduler.scheduler import Scheduler
-from gait.gait_positional import GaitPositional
-from gait.gait_rotational import GaitRotational
-from motion.leg_config import LegConfig
-from motion.frame import Frame
+from arachnid.gait.gait_positional import GaitPositional
+from arachnid.gait.gait_rotational import GaitRotational
+from arachnid.move.move_controller import MoveController
 
-import motion.kinematics.forward_frame as fkinematics
-import motion.kinematics.graphical_arachne as gkinematics
+import arachnid.kinematics.graphical_kinematics as gkinematics
+import robotics.motion.kinematics.forward_frame as fkinematics
 
-Position = Tuple[float, float, float]
 
 def forward_kinematics(thetas: Position) -> Position:
     #translation (90, 90, 0)
@@ -35,10 +32,9 @@ def clean(tup):
 def fake():
     """Testing script for kinematics"""
 
-    gait_p = GaitPositional()
     gait_r = GaitRotational()
 
-    config = LegConfig(66.0, 31.0, 77.0)
+    config = Leg3DOF(66.0, 31.0, 77.0)
     moves = [gait_r.__gait_provider__(i) for i in range(8)]
 
     for rotations in moves:
@@ -63,7 +59,7 @@ def main():
     #thetas_f_r = translate(gkinematics.solve_inverse_kinematic(config, next(f_r)))
     #thetas_b_r = translate(gkinematics.solve_inverse_kinematic(config, next(b_r)))
 
-    leg_config = LegConfig(66.0, 31.0, 77.0)
+    leg_config = Leg3DOF(66.0, 31.0, 77.0)
 
     legs = [
         Part(leg_config, (90, 90, 90), walking_id=0, turning_id=0),
