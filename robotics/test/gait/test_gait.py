@@ -21,4 +21,4 @@ class TestGait(unittest.TestCase):
     def test_turning_cycle_throws_unimplemented(self):
         """Test turning sequence cyclic period"""
         with self.assertRaises(NotImplementedError):
-            Gait().walking_generator(0)
+            Gait().turning_generator(0)
