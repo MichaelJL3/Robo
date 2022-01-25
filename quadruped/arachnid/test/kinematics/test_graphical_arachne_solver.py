@@ -10,7 +10,7 @@ import numpy.testing as nptest
 import arachnid.kinematics.graphical_kinematics as gkinematics
 
 from robotics.body.leg_3dof import Leg3DOF
-from robotics.typings.types import Position
+from robotics.typings.types import Vector3
 
 class TestInverseKinematicGraphicalArachneSolver(unittest.TestCase):
     """Forward kinematic tests based on graphical analysis"""
@@ -23,12 +23,12 @@ class TestInverseKinematicGraphicalArachneSolver(unittest.TestCase):
         [(66,       108.0,  0     ), (90.0,  0.0,  180.0 )],
         [(85.923,  -64.54, -93.114), (137.3, 78.4, 101.599)]
     ])
-    def test_solve(self, dst: Position, expected: Position):
+    def test_solve(self, dst: Vector3, expected: Vector3):
         """Test that solver copmutes forward position
 
         Args:
-            dst (Position): the input destination
-            expected (Position): the expected theta rotations output
+            dst (Vector3): the input destination
+            expected (Vector3): the expected theta rotations output
         """
         config = __test_config__()
 
@@ -48,12 +48,12 @@ class TestForwardKinematicGraphicalArachneSolver(unittest.TestCase):
         [(90.2,  0.0,  0.0 ), (66,       108.0, -0.23  )],
         [(137.3, 78.4, 78.4), (85.923,  -64.54, -93.114)]
     ])
-    def test_solve(self, thetas: Position, expected: Position):
+    def test_solve(self, thetas: Vector3, expected: Vector3):
         """Test that solver copmutes forward position
 
         Args:
-            thetas (Position): the input test theta rotations
-            expected (Position): the expected position output
+            thetas (Vector3): the input test theta rotations
+            expected (Vector3): the expected position output
         """
         config = __test_config__()
 

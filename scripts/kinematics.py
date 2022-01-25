@@ -1,21 +1,23 @@
 
 """Testing gait & kinematic scripts"""
 
+from time import sleep
+
 from robotics.scheduler.scheduler import Scheduler
 from robotics.body.leg_3dof import Leg3DOF
-from robotics.body.part import Part
 from robotics.motion.frame.frame import Frame
-from robotics.typings.types import Position
+from robotics.motion.locomotion import LocomotionController
+from robotics.motion.mapping import CommonMotions
+from robotics.typings.types import Vector3
 
-from arachnid.gait.gait_positional import GaitPositional
+from arachnid.move_iter import move_iter
+from arachnid.config import get_locomotors
 from arachnid.gait.gait_rotational import GaitRotational
-from arachnid.move.move_controller import MoveController
 
 import arachnid.kinematics.graphical_kinematics as gkinematics
 import robotics.motion.kinematics.forward_frame as fkinematics
 
-
-def forward_kinematics(thetas: Position) -> Position:
+def forward_kinematics(thetas: Vector3) -> Vector3:
     #translation (90, 90, 0)
     frames = [
         Frame(rho = 66, alpha = 90, theta = 90 - thetas[0]),
@@ -55,25 +57,20 @@ def take_step(step):
 
     return inner
 
+def walk(id, theta):
+    servos = []
+    servos[id].angle = theta
+    sleep(.33)
+
 def main():
-    #thetas_f_r = translate(gkinematics.solve_inverse_kinematic(config, next(f_r)))
-    #thetas_b_r = translate(gkinematics.solve_inverse_kinematic(config, next(b_r)))
+    move_controller = LocomotionController(get_locomotors())
 
-    leg_config = Leg3DOF(66.0, 31.0, 77.0)
-
-    legs = [
-        Part(leg_config, (90, 90, 90), walking_id=0, turning_id=0),
-        Part(leg_config, (90, 90, 90), walking_id=2, turning_id=4),
-        Part(leg_config, (90, 90, 90), walking_id=4, turning_id=4),
-        Part(leg_config, (90, 90, 90), walking_id=6, turning_id=0)
-    ]
-
-    move_controller = MoveController(GaitPositional(), gkinematics.solve_inverse_kinematic, legs)
     scheduler = Scheduler(1)
 
-    walk = move_controller.walking()
+    walk = move_controller.start(CommonMotions.FORWARD)
 
-    for step in MoveController.rotation_iter(next(walk)):
+    move = next(walk)
+    for step in move_iter(move):
         scheduler.enqueue(take_step(step))
 
     scheduler.join()

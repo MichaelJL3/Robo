@@ -7,7 +7,7 @@ from parameterized import parameterized
 
 import numpy.testing as nptest
 
-from robotics.typings.types import Position
+from robotics.typings.types import Vector3
 from robotics.motion.frame.frame import Frame
 import robotics.motion.kinematics.forward_frame as fkinematics
 
@@ -21,12 +21,12 @@ class TestForwardFrameSolver(unittest.TestCase):
         [(90.2,  0.0,  0.0 ), (66,       108.0, -0.23  )],
         [(137.3, 78.4, 78.4), (85.923,  -64.54, -93.114)]
     ])
-    def test_solve(self, thetas: Position, expected: Position):
+    def test_solve(self, thetas: Vector3, expected: Vector3):
         """Test that solver copmutes forward position
 
         Args:
-            thetas (Position): the input test theta rotations
-            expected (Position): the expected position output
+            thetas (Vector3): the input test theta rotations
+            expected (Vector3): the expected position output
         """
         frames = __test_frames__()
 
