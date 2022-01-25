@@ -9,15 +9,72 @@ from arachnid.gait.gait import Gait
 class TestGait(unittest.TestCase):
     """Gait tests"""
 
+    @staticmethod
+    def __fake_gait__(index: int, reverse: bool = False) -> int:
+        """Fake gait function for testing
+
+        Args:
+            index (int): the gait step
+            reverse (bool, optional): the reverse flag. Defaults to False.
+
+        Returns:
+            int: fake gait
+        """
+        return index if not reverse else -index
+
+    def test_forward(self):
+        """Test forward"""
+        gait = Gait()
+        gait.__gait_provider__ = self.__fake_gait__
+        gen = gait.forward(1)
+
+        expected = 1
+        result = next(gen())
+
+        self.assertEqual(expected, result)
+
+    def test_backward(self):
+        """Test backward"""
+        gait = Gait()
+        gait.__gait_provider__ = self.__fake_gait__
+        gen = gait.backward(1)
+
+        expected = -1
+        result = next(gen())
+
+        self.assertEqual(expected, result)
+
+    def test_left_turn(self):
+        """Test left turn"""
+        gait = Gait()
+        gait.__gait_provider__ = self.__fake_gait__
+        gen = gait.turn_left(1)
+
+        expected = -1
+        result = next(gen())
+
+        self.assertEqual(expected, result)
+
+    def test_right_turn(self):
+        """Test right turn"""
+        gait = Gait()
+        gait.__gait_provider__ = self.__fake_gait__
+        gen = gait.turn_right(1)
+
+        expected = 1
+        result = next(gen())
+
+        self.assertEqual(expected, result)
+
     def test_gait_position_throws_unimplemented(self):
         """Test that gait base class cannot be used directly"""
         with self.assertRaises(NotImplementedError):
-            Gait().__gait_provider__(0)
+            Gait().__gait_provider__(0, False)
 
     def test_walking_cycle(self):
         """Test walking sequence cyclic period"""
         gait = Gait()
-        gait.__gait_provider__ = lambda x: x
+        gait.__gait_provider__ = lambda x, _: x
         gen = gait.walking_generator()
         cycle_length = 8
 
@@ -29,7 +86,7 @@ class TestGait(unittest.TestCase):
     def test_turning_cycle(self):
         """Test turning sequence cyclic period"""
         gait = Gait()
-        gait.__gait_provider__ = lambda x: x
+        gait.__gait_provider__ = lambda x, _: x
         gen = gait.turning_generator()
         cycle_length = 4
 

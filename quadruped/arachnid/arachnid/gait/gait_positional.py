@@ -2,10 +2,12 @@
 """Gait generation for movements"""
 
 from arachnid.gait.gait import Gait
-from robotics.typings.types import Position
+
+from robotics.math.reflections import x_axis_3d
+from robotics.typings.types import Vector3
 
 class GaitPositional(Gait):
-    """Gait class"""
+    """Positional gait"""
 
     _gait_as_dst = [
         (106.73,  99.41,   0.00),
@@ -18,13 +20,15 @@ class GaitPositional(Gait):
         ( 48.50, -77.00,  84.00)
     ]
 
-    def __gait_provider__(self, index: int) -> Position:
-        """Generate the gait in terms of end effector position
+    def __gait_provider__(self, index: int, reverse: bool = False) -> Vector3:
+        """Provide the gait in terms of physical location relative to the part base
 
         Args:
-            index (int): the step in the movement
+            index (int): the passed in index
+            reverse (bool, optional): whether to reverse the direction. Defaults to false.
 
         Returns:
-            Position: the position
+            Vector3: the gait position
         """
-        return self._gait_as_dst[index]
+        move = self._gait_as_dst[index]
+        return x_axis_3d(move) if reverse else move

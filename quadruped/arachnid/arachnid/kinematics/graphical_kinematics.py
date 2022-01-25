@@ -3,19 +3,19 @@
 
 import math
 
-from robotics.typings.types import Position
+from robotics.typings.types import Vector3
 from robotics.body.leg_3dof import Leg3DOF
 from robotics.math.trig_utils import loc_theta_degrees, loc_degrees, pythagorean_side
 
-def solve_inverse_kinematic(config: Leg3DOF, dst: Position) -> Position:
+def solve_inverse_kinematic(config: Leg3DOF, dst: Vector3) -> Vector3:
     """Calculate the inverse kinematics for a graphically mapped arache leg (3DOF)
 
     Args:
         config (Leg3DOF): the leg configuration
-        dst (Position): the desired location relative to the leg base
+        dst (Vector3): the desired location relative to the leg base
 
     Returns:
-        Position: the required theta rotations to reach desired location
+        Vector3: the required theta rotations to reach desired location
     """
     dst_x, dst_y, dst_z = dst
 
@@ -33,15 +33,15 @@ def solve_inverse_kinematic(config: Leg3DOF, dst: Position) -> Position:
 
     return (theta_1, theta_2, theta_3)
 
-def solve_forward_kinematic(config: Leg3DOF, thetas: Position) -> Position:
+def solve_forward_kinematic(config: Leg3DOF, thetas: Vector3) -> Vector3:
     """Calculate the forward kinematics for a graphically mapped arache leg (3DOF)
 
     Args:
         config (Leg3DOF): the leg configuration
-        thetas (Position): the rotations of the leg
+        thetas (Vector3): the rotations of the leg
 
     Returns:
-        Position: the location of the end effector relative to the base
+        Vector3: the location of the end effector relative to the base
     """
     theta_1, theta_2, theta_3 = thetas
 
@@ -58,20 +58,20 @@ def solve_forward_kinematic(config: Leg3DOF, thetas: Position) -> Position:
 
     return __convert_quadrant__(theta_1, p_x, p_y, p_z)
 
-def __quadrant_conversions__(theta: float) -> Position:
+def __quadrant_conversions__(theta: float) -> Vector3:
     """X/Z negative scaling on base theta
 
     Args:
         theta (float): the base angle
 
     Returns:
-        Position: the quadrant scaling
+        Vector3: the quadrant scaling
     """
 
     #Z/X are reversed based on current servo layout
     return (1, 1, 1) if theta <= 90 else (1, 1, -1)
 
-def __convert_quadrant__(theta: float, p_x: float, p_y: float, p_z: float) -> Position:
+def __convert_quadrant__(theta: float, p_x: float, p_y: float, p_z: float) -> Vector3:
     """Convert the X/Z values based on the current quadrant of the base angle
 
     Args:
@@ -81,7 +81,7 @@ def __convert_quadrant__(theta: float, p_x: float, p_y: float, p_z: float) -> Po
         p_z (float): the z position
 
     Returns:
-        Position: the adjusted position
+        Vector3: the adjusted position
     """
     x_quadrant, y_quadrant, z_quadrant = __quadrant_conversions__(theta)
     return (p_x * x_quadrant, p_y * y_quadrant, p_z * z_quadrant)
